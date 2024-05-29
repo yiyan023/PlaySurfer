@@ -4,8 +4,20 @@ export default {
 		"./src/**/*.{js,jsx,ts,tsx}",
 	],
   	theme: {
-    	extend: {},
+    	extend: {
+			colors: {
+				'dark-blue': '004AAD',
+				'light-blue': 'F5F5F5',
+				'white' : 'FFFFFF',
+				'black' : '000000'
+			},
+			fontFamily: {
+				livvic: ['Livvic', 'sans-serif'],
+				montserrat: ['Montserrat', 'sans-serif'],
+				montserratLight: ['Montserrat-Light', 'sans-serif']
+			}
+		},
   	},
-  	plugins: [],
+  	plugins: [import('tailwindcss-animate')],
 }
 

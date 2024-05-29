@@ -2,6 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+	font-family: 'Livvic';
+	src: url('./assets/fonts/Livvic-Medium.ttf');
+}
+
+@font-face {
+	font-family: 'Montserrat-Light';
+	src: url('./assets//fonts/Montserrat-Light.ttf');
+}
+
+@font-face {
+	font-family: 'Montserrat';
+	src: url('./assets/fonts/Montserrat-Regular.ttf');
+}
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
