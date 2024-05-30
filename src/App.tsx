@@ -11,12 +11,11 @@ import Login from './_auth/forms/Login';
 import SignUp from './_auth/forms/SignUp';
 import RootLayout from './_root/RootLayout';
 import AuthLayout from './_auth/AuthLayout';
-import { Root } from 'postcss';
 
 function App() {
   return (
-    <>
-      <Router>
+	<main className='flex h-screen w-screen'>
+		<Router>
 		<Routes>
 			{/* public routes */}
 			<Route element={<AuthLayout />}>
@@ -34,8 +33,8 @@ function App() {
 				<Route path="/profile" element={<Profile />}/>
 			</Route>
 		</Routes>
-	  </Router>
-    </>
+	  	</Router>
+	</main>
   )
 }
 
