@@ -4,4 +4,5 @@ Hey there! 👋 I just started my project PlaySurfer, which is in the beginning 
 
 If you want to check out my Figma designs: https://www.figma.com/design/6PurcE5GSoyV9LBLBdIeGs/PlaySurfer?node-id=0%3A1&t=sV8UEtPMJvnLLw9G-1
 
-**Technologies:** React, TailwindCSS, Vite & counting!
+**Languages**: JavaScript, TypeScript
+**Technologies:** React, TailwindCSS, Vite, shadcn/ui & counting!
