@@ -40,7 +40,7 @@ const SignUp = () => {
 			</div>
 			<Form {...form} >
 				<div className="flex-center flex-col">
-					<h2 className="font-montserrat text-center text-xl text-white mb-4">Sign Up</h2>
+					<h2 className="font-montserrat text-center text-xl text-white mb-4">Create a New Account</h2>
 				</div>
 				<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 flex flex-col justify-center">
 				<FormField
@@ -101,7 +101,7 @@ const SignUp = () => {
 				<a onClick={() => {navigate('/login')}} className="text-white hover:text-l-blue cursor-pointer">Login</a>
 			</div>
 		</div>
-  )
+  	)
 }
 
 export default SignUp
