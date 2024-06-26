@@ -91,10 +91,10 @@ const SignUp = () => {
 						</FormItem>
 					)}
 					/>
+					<div className="flex flex-col justify-center mt-2">
+						<Button type="submit">Submit</Button>
+					</div>
 				</form>
-				<div className="flex flex-col justify-center mt-2">
-					<Button type="submit">Submit</Button>
-				</div>
 			</Form>
 			<div className="flex flex-row justify-between mt-5">
 				<p className="text-l-blue cursor-default">Have an account?</p>

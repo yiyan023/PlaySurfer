@@ -22,7 +22,8 @@ module.exports = {
 			'white' : '#ffffff',
 			'grey' : '#f5f5f5',
 			'd-blue' : '#004aad',
-			'l-blue' : '#aec3de'
+			'l-blue' : '#aec3de',
+			'error' : '#ffe6ff'
 		},
 		screens: {
 			'xs': '480px',
