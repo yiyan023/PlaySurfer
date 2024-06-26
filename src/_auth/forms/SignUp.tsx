@@ -15,6 +15,7 @@ import {
 
 import Logo from './../../../public/assets/logos/ps-logo-circle.png'
 import { useNavigate } from "react-router-dom"
+import { createUserAccount } from "@/lib/appwrite/api"
 
 const SignUp = () => {
 	const navigate = useNavigate();
@@ -28,8 +29,9 @@ const SignUp = () => {
 		},
 	})  
 
-	function onSubmit(values: z.infer<typeof formSchema>) {
-		console.log(values)
+	async function onSubmit(values: z.infer<typeof formSchema>) {
+		const newUser = await createUserAccount(values);
+		console.log(newUser);
 	} 
 	
 	return (
