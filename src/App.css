@@ -68,9 +68,9 @@
 
   @layer base {
     * {
-      @apply border-border;
+      @apply box-border list-none p-0 m-0 scroll-smooth;;
     }
     body {
-      @apply bg-background text-foreground;
+      @apply bg-white text-black min-h-screen font-montserrat;
     }
   }

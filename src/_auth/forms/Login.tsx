@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
+import { formSchema } from "@/lib/validation"
 import { z } from "zod"
 
 import {
@@ -13,10 +14,6 @@ import {
 	FormMessage,
   } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-
-const formSchema = z.object({
-	username: z.string().min(2).max(50),
-})
 
 const Login = () => {
 	
@@ -41,9 +38,8 @@ const Login = () => {
 					name="username"
 					render={({ field }) => (
 						<FormItem>
-						<FormLabel>Username</FormLabel>
 						<FormControl>
-							<Input placeholder="shadcn" {...field} />
+							<Input placeholder="Username" {...field} />
 						</FormControl>
 						<FormDescription>
 							This is your public display name.
