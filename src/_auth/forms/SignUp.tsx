@@ -31,7 +31,7 @@ const SignUp = () => {
 
 	async function onSubmit(values: z.infer<typeof formSchema>) {
 		const newUser = await createUserAccount(values);
-		console.log(newUser);
+		console.log(newUser)
 	} 
 	
 	return (

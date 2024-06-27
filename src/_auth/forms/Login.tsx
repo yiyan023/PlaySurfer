@@ -3,7 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { formSchema } from "@/lib/validation"
 import { z } from "zod"
-import Logo from './../../../public/assets/logos/ps-logo-circle.png'
+import Logo from '/assets/logos/ps-logo-circle.png'
 
 import {
 	Form,
