@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form"
 import { formSchema } from "@/lib/validation"
 import { z } from "zod"
 import { Input } from "@/components/ui/input"
+import { useToast } from "@/components/ui/use-toast"
 
 import {
 	Form,
@@ -19,6 +20,7 @@ import { createUserAccount } from "@/lib/appwrite/api"
 
 const SignUp = () => {
 	const navigate = useNavigate();
+	const { toast } = useToast();
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
@@ -31,7 +33,13 @@ const SignUp = () => {
 
 	async function onSubmit(values: z.infer<typeof formSchema>) {
 		const newUser = await createUserAccount(values);
-		console.log(newUser)
+		
+		if (!newUser) {
+			return toast({
+				title: 'Sign up failed. Please try again.'
+			})
+		}
+		// const session = awaitSignInAccount();
 	} 
 	
 	return (
