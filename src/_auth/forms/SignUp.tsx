@@ -16,11 +16,14 @@ import {
 
 import Logo from './../../../public/assets/logos/ps-logo-circle.png'
 import { useNavigate } from "react-router-dom"
-import { createUserAccount } from "@/lib/appwrite/api"
+import { useCreateUserAccount, useSignInAccount } from "@/lib/react-query/queriesAndMutations"
+import { useUserContext } from "@/context/AuthContext"
 
 const SignUp = () => {
 	const navigate = useNavigate();
 	const { toast } = useToast();
+	const { checkAuthUser, isLoading: isUserLoading} = useUserContext();
+
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
@@ -31,6 +34,9 @@ const SignUp = () => {
 		},
 	})  
 
+	const { mutateAsync: createUserAccount } = useCreateUserAccount();
+  	const { mutateAsync: signInAccount } = useSignInAccount();
+
 	async function onSubmit(values: z.infer<typeof formSchema>) {
 		const newUser = await createUserAccount(values);
 		
@@ -39,7 +45,25 @@ const SignUp = () => {
 				title: 'Sign up failed. Please try again.'
 			})
 		}
-		// const session = awaitSignInAccount();
+		const session = await signInAccount({
+			email: values.email,
+			password: values.password
+		});
+
+		if(!session) {
+			return toast({
+				title: 'Sign in failed. Please try again.'
+			})
+		}
+
+		const isLoggedIn = await checkAuthUser();
+
+		if (isLoggedIn) {
+			form.reset(); 
+			navigate('/');
+		} else {
+			return toast({ title: 'Failed to log in. Please try again.'});
+		}
 	} 
 	
 	return (
@@ -102,7 +126,9 @@ const SignUp = () => {
 					)}
 					/>
 					<div className="flex flex-col justify-center mt-2">
-						<Button type="submit">Submit</Button>
+						<Button type="submit">
+							{isUserLoading ? ("Loading") : ("Submit")}
+						</Button>
 					</div>
 				</form>
 			</Form>
