@@ -1,10 +1,11 @@
 import { Button } from "@/components/ui/button"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { formSchema } from "@/lib/validation"
+import { SignUpValidation } from "@/lib/validation"
 import { z } from "zod"
 import { Input } from "@/components/ui/input"
 import { useToast } from "@/components/ui/use-toast"
+import { account } from "@/lib/appwrite/config"
 
 import {
 	Form,
@@ -24,8 +25,8 @@ const SignUp = () => {
 	const { toast } = useToast();
 	const { checkAuthUser, isLoading: isUserLoading} = useUserContext();
 
-	const form = useForm<z.infer<typeof formSchema>>({
-		resolver: zodResolver(formSchema),
+	const form = useForm<z.infer<typeof SignUpValidation>>({
+		resolver: zodResolver(SignUpValidation),
 		defaultValues: {
 			name: "",
 		  	username: "",
@@ -37,7 +38,7 @@ const SignUp = () => {
 	const { mutateAsync: createUserAccount, status: isCreatingAccount } = useCreateUserAccount();
   	const { mutateAsync: signInAccount, status: isSigningInUser } = useSignInAccount();
 
-	async function onSubmit(values: z.infer<typeof formSchema>) {
+	async function onSubmit(values: z.infer<typeof SignUpValidation>) {
 		const newUser = await createUserAccount(values);
 		
 		if (!newUser) {
@@ -45,6 +46,13 @@ const SignUp = () => {
 				title: 'Sign up failed. Please try again.'
 			})
 		}
+
+		const currentSession = await account.getSession('current');
+
+		if (currentSession) {
+			account.deleteSession('current')
+		}
+
 		const session = await signInAccount({
 			email: values.email,
 			password: values.password

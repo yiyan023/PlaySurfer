@@ -1,9 +1,10 @@
 import { Button } from "@/components/ui/button"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { formSchema } from "@/lib/validation"
+import { SigninValidation } from "@/lib/validation"
 import { z } from "zod"
 import Logo from '/assets/logos/ps-logo-circle.png'
+import { account } from "@/lib/appwrite/config"
 
 import {
 	Form,
@@ -15,19 +16,49 @@ import {
 
 import { Input } from "@/components/ui/input"
 import { useNavigate } from "react-router-dom"
+import { toast } from "@/components/ui/use-toast"
+import { useUserContext } from "@/context/AuthContext"
+import { useSignInAccount } from "@/lib/react-query/queriesAndMutations"
 
 const Login = () => {
 	const navigate = useNavigate();
-	const form = useForm<z.infer<typeof formSchema>>({
-		resolver: zodResolver(formSchema),
+	const form = useForm<z.infer<typeof SigninValidation>>({
+		resolver: zodResolver(SigninValidation),
 		defaultValues: {
-			name: "",
-		  	username: "",
+		  	email: "",
+			password: ""
 		},
 	})  
 
-	function onSubmit(values: z.infer<typeof formSchema>) {
-		console.log(values)
+	const { checkAuthUser, isLoading: isUserLoading} = useUserContext();
+	const { mutateAsync: signInAccount, status: isSigningInUser } = useSignInAccount();
+
+	async function onSubmit(values: z.infer<typeof SigninValidation>) {
+		const currentSession = await account.getSession('current');
+
+		if (currentSession) {
+			account.deleteSession('current')
+		}
+
+		const session = await signInAccount({
+			email: values.email,
+			password: values.password
+		});
+
+		if(!session) {
+			return toast({
+				title: 'Sign in failed. Please try again.'
+			})
+		}
+
+		const isLoggedIn = await checkAuthUser();
+
+		if (isLoggedIn) {
+			form.reset(); 
+			navigate('/');
+		} else {
+			return toast({ title: 'Failed to log in. Please try again.'});
+		}
 	} 
 	
 	return (
@@ -38,12 +69,12 @@ const Login = () => {
 			</div>
 			<Form {...form} >
 				<div className="flex-center flex-col">
-					<h2 className="font-montserrat text-center text-xl text-white mb-4">Login</h2>
+					<h2 className="font-montserrat text-center text-xl text-white mb-4">Log in</h2>
 				</div>
 				<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 flex flex-col justify-center">
-					<FormField
+				<FormField
 					control={form.control}
-					name="username"
+					name="email"
 					render={({ field }) => (
 						<FormItem>
 						<FormControl>
@@ -66,13 +97,15 @@ const Login = () => {
 					)}
 					/>
 					<div className="flex flex-col justify-center mt-2">
-						<Button type="submit">Submit</Button>
+						<Button type="submit">
+							{isSigningInUser === "pending" || isUserLoading ? ("Loading") : ("Submit")}
+						</Button>
 					</div>
 				</form>
 			</Form>
 			<div className="flex flex-row justify-between mt-5">
 				<p className="text-l-blue cursor-default">Don't have an account?</p>
-				<a onClick={() => {navigate('/sign-up')}} className="text-white hover:text-l-blue cursor-pointer">Signup</a>
+				<a onClick={() => {navigate('/sign-up')}} className="text-white hover:text-l-blue cursor-pointer">Sign up</a>
 			</div>
 		</div>
   	)
