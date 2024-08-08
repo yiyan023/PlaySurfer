@@ -1,5 +1,5 @@
 import './App.css'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 import Home from './_root/pages/Home';
 import Messages from './_root/pages/Messages';
@@ -18,7 +18,6 @@ import { Toaster } from "@/components/ui/toaster"
 function App() {
   return (
 	<main className='flex h-screen w-screen'>
-		<Router>
 		<Routes>
 			{/* public routes */}
 			<Route element={<AuthLayout />}>
@@ -36,7 +35,6 @@ function App() {
 				<Route path="/profile" element={<Profile />}/>
 			</Route>
 		</Routes>
-	  	</Router>
 
 		<Toaster />
 	</main>

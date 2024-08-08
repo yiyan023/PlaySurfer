@@ -34,8 +34,8 @@ const SignUp = () => {
 		},
 	})  
 
-	const { mutateAsync: createUserAccount } = useCreateUserAccount();
-  	const { mutateAsync: signInAccount } = useSignInAccount();
+	const { mutateAsync: createUserAccount, status: isCreatingAccount } = useCreateUserAccount();
+  	const { mutateAsync: signInAccount, status: isSigningInUser } = useSignInAccount();
 
 	async function onSubmit(values: z.infer<typeof formSchema>) {
 		const newUser = await createUserAccount(values);
@@ -127,7 +127,7 @@ const SignUp = () => {
 					/>
 					<div className="flex flex-col justify-center mt-2">
 						<Button type="submit">
-							{isUserLoading ? ("Loading") : ("Submit")}
+							{isCreatingAccount === "pending"|| isSigningInUser === "pending" || isUserLoading ? ("Loading") : ("Submit")}
 						</Button>
 					</div>
 				</form>

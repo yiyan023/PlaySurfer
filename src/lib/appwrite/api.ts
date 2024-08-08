@@ -40,12 +40,16 @@ export async function saveUserToDB(user: {
 		const newUser = await databases.createDocument(
 			appwriteConfig.databaseID,
 			appwriteConfig.usersID,
-			user.email,
+			ID.unique(),
 			user
 		)
-
+		
+		console.log(appwriteConfig.databaseID)
+		console.log(appwriteConfig.usersID)
 		return newUser;
 	} catch (error) {
+		console.log(appwriteConfig.databaseID)
+		console.log(appwriteConfig.usersID);
 		console.log(error)
 	}
 }
