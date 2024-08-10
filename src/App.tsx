@@ -1,11 +1,11 @@
 import './App.css'
 import { Routes, Route } from 'react-router-dom';
 
-import Home from './_root/pages/Home';
-import Messages from './_root/pages/Messages';
+import Home from './_root/pages/homepage/Home';
+import Messages from './_root/pages/homepage/Messages';
 import Schedule from './_root/pages/Schedule';
-import Feed from './_root/pages/Feed';
-import Activity from './_root/pages/Activity';
+import Feed from './_root/pages/homepage/Feed';
+import Activity from './_root/pages/homepage/Activity';
 import Profile from './_root/pages/Profile';
 import Login from './_auth/forms/Login';
 import SignUp from './_auth/forms/SignUp';

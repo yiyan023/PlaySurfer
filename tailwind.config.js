@@ -27,6 +27,7 @@ module.exports = {
 		},
 		screens: {
 			'xs': '480px',
+			'h-md': { 'raw': '(min-height: 600px)' }
 		},
 		width: {
 			'420': '420px',
@@ -35,6 +36,11 @@ module.exports = {
 		fontFamily: {
 			livvic: ['Livvic', 'sans-serif'],
 			montserrat: ['Montserrat', 'sans-serif']
+		},
+		fontSize: {
+			small: '14px',
+			medium: '20px',
+			large: '36px'
 		},
 		keyframes: {
 		'accordion-down': {
