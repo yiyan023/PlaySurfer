@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form"
 import { SigninValidation } from "@/lib/validation"
 import { z } from "zod"
 import Logo from '/assets/logos/ps-logo-circle.png'
-import { account } from "@/lib/appwrite/config"
 
 import {
 	Form,
@@ -34,12 +33,6 @@ const Login = () => {
 	const { mutateAsync: signInAccount, status: isSigningInUser } = useSignInAccount();
 
 	async function onSubmit(values: z.infer<typeof SigninValidation>) {
-		const currentSession = await account.getSession('current');
-
-		if (currentSession) {
-			account.deleteSession('current')
-		}
-
 		const session = await signInAccount({
 			email: values.email,
 			password: values.password
