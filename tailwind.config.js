@@ -27,20 +27,23 @@ module.exports = {
 		},
 		screens: {
 			'xs': '480px',
-			'h-md': { 'raw': '(min-height: 600px)' }
 		},
 		width: {
 			'420': '420px',
 			'465': '465px',
+		},
+		height: {
+			'80' : '80px'
 		},
 		fontFamily: {
 			livvic: ['Livvic', 'sans-serif'],
 			montserrat: ['Montserrat', 'sans-serif']
 		},
 		fontSize: {
-			small: '14px',
-			medium: '20px',
-			large: '36px'
+			small: '1rem',
+			mod: '1.25rem',
+			medium: '1.5rem',
+			large: '2rem'
 		},
 		keyframes: {
 		'accordion-down': {

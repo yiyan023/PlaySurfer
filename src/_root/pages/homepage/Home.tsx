@@ -1,9 +1,10 @@
 import Dashboard from "./Dashboard"
 import NavBar from "./NavBar"
+import './styling/Home.css'
 
 const Home = () => {
   return (
-	<div className="flex flex-row">
+	<div className="app flex flex-row">
 		<NavBar />
 		<Dashboard />
 	</div>

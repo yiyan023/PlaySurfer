@@ -1,0 +1,33 @@
+@media screen and (max-height: 650px) {
+	.nav-button {
+		height: 50px;
+		font-size: 20px;
+	}
+
+	.title-div {
+		margin-bottom: 20px;
+		margin-top: 20px;
+	}
+
+	.title-div h1 {
+		font-size: 30px
+	}
+
+	.nav-div {
+		margin-top: 0px
+	}
+}
+
+@media screen and (max-width: 800px) {
+	.nav-div {
+		padding: 5px;
+	}
+
+	.user-profile {
+		margin-right: 0px;
+	}
+
+	.profile-div {
+		padding: 30px;
+	}
+}
