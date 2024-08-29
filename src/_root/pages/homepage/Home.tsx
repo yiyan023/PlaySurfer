@@ -4,7 +4,7 @@ import './styling/Home.css'
 
 const Home = () => {
   return (
-	<div className="app flex flex-row">
+	<div className="app flex flex-row w-screen">
 		<NavBar />
 		<Dashboard />
 	</div>

@@ -31,3 +31,19 @@
 		padding: 30px;
 	}
 }
+
+.search-bar {
+	width: 80%;
+	height: 40px;
+}
+
+.add-button {
+	height: 40px;
+	font-size: 40px;
+	padding: 0px;
+	margin-left: 2rem;
+}
+
+.add-button:hover {
+	border: none;
+}
