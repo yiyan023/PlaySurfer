@@ -1,4 +1,4 @@
-import { INewUser } from "@/types";
+import { INewEvent, INewUser } from "@/types";
 import { ID } from "appwrite";
 import { account, appwriteConfig, avatars, databases } from "./config";
 import { Query } from "appwrite";
@@ -44,12 +44,8 @@ export async function saveUserToDB(user: {
 			user
 		)
 		
-		console.log(appwriteConfig.databaseID)
-		console.log(appwriteConfig.usersID)
 		return newUser;
 	} catch (error) {
-		console.log(appwriteConfig.databaseID)
-		console.log(appwriteConfig.usersID);
 		console.log(error)
 	}
 }
@@ -79,6 +75,46 @@ export async function getCurrentUser() {
 
 		if (!currentUser) throw Error;
 		return currentUser.documents[0];
+	} catch (error) {
+		console.log(error)
+	}
+}
+
+export async function createEvent(event: INewEvent) {
+	try {
+		const newEvent = await saveEventToDB({
+			date: event.date, // possibly convert to another format?
+			sport: event.sport,
+			users: event.users
+		})
+
+		return newEvent
+	} catch (error) {
+		console.log(error)
+	}
+}
+
+export async function saveEventToDB(event: {
+	date: Date;
+	sport: string;
+	users: string[];
+}) {
+	const formattedDate = event.date.toISOString();
+
+	const eventData = {
+		date: formattedDate,
+		sport: event.sport,
+		users: event.users
+	}
+
+	try {
+		const newEvent = await databases.createDocument(
+			appwriteConfig.databaseID,
+			appwriteConfig.eventsID,
+			ID.unique(),
+			eventData
+		)
+		return newEvent
 	} catch (error) {
 		console.log(error)
 	}

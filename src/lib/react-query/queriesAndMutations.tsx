@@ -1,8 +1,8 @@
-import { INewUser } from '@/types'
+import { INewEvent, INewUser } from '@/types'
 import {
 	useMutation,
 } from '@tanstack/react-query'
-import { createUserAccount, signInAccount } from '../appwrite/api'
+import { createUserAccount, signInAccount, createEvent } from '../appwrite/api'
 
 export const useCreateUserAccount = () => {
 	return useMutation({
@@ -16,5 +16,11 @@ export const useSignInAccount= () => {
 			email: string,
 			password: string
 		}) => signInAccount(user)
+	})
+}
+
+export const useCreateEvent = () => {
+	return useMutation({
+		mutationFn: (event: INewEvent) => createEvent(event)
 	})
 }
