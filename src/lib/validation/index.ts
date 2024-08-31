@@ -11,3 +11,9 @@ export const SigninValidation = z.object({
 	email: z.string().email(),
 	password: z.string().min(10, { message: "Password must be a min of 10 characters"})
 })
+
+export const CreateEvent = z.object({
+	date: z.date(),
+	sport: z.string(),
+	users: z.array(z.string())
+})

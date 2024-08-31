@@ -1,0 +1,24 @@
+.modal-overlay {
+	background-color: white;
+	padding: 2rem;
+	border: 2px solid black;
+	position: relative;
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	top: 25%;
+	left: 30%;
+	right: 30%;
+	bottom: 25%;
+}
+
+.toggle-modal {
+	opacity: 10%
+}
+
+.modal-overlay button {
+	background-color: white;
+	width: 100%
+}
