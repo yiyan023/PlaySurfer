@@ -19,10 +19,10 @@ const Modal: React.FC<ModalProps> = ({ hideModal }) => {
 		<div className="modal-overlay">
 			{toggleChoices && 
 				<div>
-					<button onClick={showEvent}>Event</button>
-					<button>Friend</button>
-					<button>Invite</button>
-					<button onClick={hideModal}>Close</button>
+					<button onClick={showEvent} className='modal-choice'>Event</button>
+					<button className='modal-choice'>Friend</button>
+					<button className='modal-choice'>Invite</button>
+					<button onClick={hideModal} className='modal-choice'>Close</button>
 				</div>
 			}
 			{toggleEvent && 

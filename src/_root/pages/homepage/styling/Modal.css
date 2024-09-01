@@ -18,7 +18,15 @@
 	opacity: 10%
 }
 
-.modal-overlay button {
+.modal-overlay .modal-choice {
 	background-color: white;
 	width: 100%
+}
+
+.date-picker {
+	background-color: white;
+}
+
+.react-datepicker__navigation react-datepicker__navigation--next, react-datepicker__navigation react-datepicker__navigation--previous {
+	width: 25px;
 }
