@@ -30,3 +30,21 @@
 .react-datepicker__navigation react-datepicker__navigation--next, react-datepicker__navigation react-datepicker__navigation--previous {
 	width: 25px;
 }
+
+.dropdown-container {
+    position: relative;
+}
+
+.dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-height: 200px; 
+    overflow-y: auto; 
+}

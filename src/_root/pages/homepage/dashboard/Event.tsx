@@ -17,16 +17,30 @@ import { useCreateEvent } from "@/lib/react-query/queriesAndMutations"
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css'
 import { toast } from "@/components/ui/use-toast"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { databases } from "@/lib/appwrite/config"
 import { appwriteConfig } from "@/lib/appwrite/config"
-import { IUser } from "@/types"
 import { Query } from "appwrite"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faUser } from "@fortawesome/free-solid-svg-icons"
 
 const Event = () => {
 	const [name, setName] = useState("")
-	const [users, setUsers] = useState<Document[]>([])
-	const [results, setResults] = useState([])
+	const [documents, setDocuments] = useState<JSX.Element[]>([])
+	const [showImage, setShowImage] = useState(true);
+	const [users, setUsers] = useState<string[]>([])
+	const [userSet, setUserSet] = useState<Set<string>>(new Set())
+
+	window.addEventListener('resize', () => {
+			
+		if (window.innerWidth <= 700) {
+			setShowImage(false)
+		} else {
+			setShowImage(true)
+		}
+
+		console.log(window.innerWidth, showImage)
+	})
 
 	const form = useForm<z.infer<typeof CreateEvent>>({
 		resolver: zodResolver(CreateEvent),
@@ -51,25 +65,60 @@ const Event = () => {
 		}
 	}
 
-	const fetchUsers = async () => {
-		if (name.length > 0) {
-			try {
-				const response = await databases.listDocuments(
-					appwriteConfig.databaseID,
-					appwriteConfig.usersID,
-					[
-						Query.or([Query.contains('name', [name]), Query.contains('username', [name])]),
-						Query.limit(5)
-					]
-				);
+	useEffect(() => {
+		const fetchUsers = async () => {
+			if (name.trim() === '') {
+                setDocuments([]); // Clear dropdown if input is empty
+                return;
+            }
 
-				console.log(name);
-				console.log(response.documents)
-			} catch (error) {
-				
+			if (name.length > 0) {
+				try {
+					const response = await databases.listDocuments(
+						appwriteConfig.databaseID,
+						appwriteConfig.usersID,
+						[
+							Query.or([Query.contains('name', [name]), Query.contains('username', [name])]),
+							Query.limit(5)
+						]
+					);
+	
+					const documentOption = response.documents.map(document => {
+						return (
+							<div 
+								key={document.$id} 
+								onClick={() => {
+									if (!userSet.has(document.$id)) {
+										setUsers(prevUsers => [...prevUsers, document.$id])
+									}
+
+									setUserSet(prevUserSet => new Set(prevUserSet).add(document.$id));
+									console.log(users, userSet)
+								}}
+								className="border border-d-blue border-1 rounded flex flex-row justify-center items-center p-5"
+							>
+								{showImage && 
+									<div className="flex justify-center items-center">
+										{document.imageURL != null ? (<img src={document.imageURL} className="h-10"/>) : (<FontAwesomeIcon icon={faUser} className="h-8 mr-2"/>)}
+									</div>
+								}
+								<div className="truncate">
+									<h2 className="text-small font-livvic truncate">{document.name}</h2>
+									<h3 className="text-xs font-montserrat truncate">@{document.username}</h3>
+								</div>
+							</div>
+						)
+					})
+	
+					setDocuments(documentOption)
+				} catch (error) {
+					console.log(error)
+				}
 			}
 		}
-	}
+
+		fetchUsers();
+	}, [name, showImage, users])
 
 	return (
 		<div className="relative">
@@ -135,18 +184,24 @@ const Event = () => {
 							render={({ field }) => (
 								<FormItem>
 								<FormControl>
-									<Input
-										className="border-d-blue placeholder:text-l-blue text-d-blue"
-										{...field}
-										placeholder="Add people to event"
-										value={name}
-										onChange={(e) => {
-											setName(e.target.value); 
-											fetchUsers();
-											// Pass the array to the form
-										}}
-										/
-									>
+									<div>
+										<Input
+											className="border-d-blue placeholder:text-l-blue text-d-blue"
+											{...field}
+											placeholder="Add people to event"
+											value={name}
+											onChange={(e) => {
+												setName(e.target.value); 
+												// Pass the array to the form
+											}}
+											/
+										>
+										 <div className="dropdown-container">
+											<div className="dropdown">
+												{documents}
+											</div>
+										</div>
+									</div>
 								</FormControl>
 								<FormMessage />
 								</FormItem>

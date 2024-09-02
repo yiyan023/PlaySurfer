@@ -40,6 +40,7 @@ module.exports = {
 			montserrat: ['Montserrat', 'sans-serif']
 		},
 		fontSize: {
+			xs: '0.75rem',
 			small: '1rem',
 			mod: '1.25rem',
 			medium: '1.5rem',
